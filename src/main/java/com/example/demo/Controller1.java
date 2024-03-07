@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,13 +8,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+
+/**
+ * Get All Countries
+ *      url: /universities
+ *      method: get
+ *      status: 200, 500
+ *      response: list of universities
+ * Get All By One or More Countries(Single Thread)
+ *      url: /universities/single?country={country_1}[&country={country_i}]
+ *      method: get
+ *      status: 200, 500
+ *      response: list of universities
+ * Get All By One or More Countries(CompletableFuture)
+ *      url: /universities/complete?country={country_1}[&country={country_i}]
+ *      method: get
+ *      status: 200, 500
+ *      response: list of universities
+ *
+ */
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/universities")
 public class Controller1 {
 
     private final HipoLabService hipolab;

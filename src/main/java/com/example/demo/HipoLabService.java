@@ -42,7 +42,6 @@ public class HipoLabService {
 
     @Async
     public CompletableFuture<String> getAsync(String country){
-//        String url = "http://universities.hipolabs.com/search?country=" + country;
         String result = getByCountry(country);
         return CompletableFuture.completedFuture(result);
     }
