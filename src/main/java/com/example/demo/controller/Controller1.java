@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.service.HipoLabService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -59,7 +60,6 @@ public class Controller1 {
     public ResponseEntity<String> getAllSingle(@RequestParam("country") List<String> countries){
         StringBuilder sb = new StringBuilder();
         for(String country: countries){
-//            String url = "http://universities.hipolabs.com/search?country=" + country;
             if(sb.isEmpty()){
                 sb.append(hipolab.getByCountry(country));
             }else{
