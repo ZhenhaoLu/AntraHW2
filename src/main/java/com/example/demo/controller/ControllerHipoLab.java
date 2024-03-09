@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.University;
 import com.example.demo.service.HipoLabService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -34,41 +37,35 @@ import java.util.concurrent.ExecutionException;
  */
 @RestController
 @RequestMapping("/universities")
-public class Controller1 {
+public class ControllerHipoLab {
 
     private final HipoLabService hipolab;
 
     @Autowired
-    public Controller1(HipoLabService hipolab){
+    public ControllerHipoLab(HipoLabService hipolab){
         this.hipolab = hipolab;
     }
 
     @GetMapping()
-    public ResponseEntity<String> getAll(){
-        return hipolab.getAll();
-//        return new ResponseEntity<>("Hello, world", HttpStatus.OK);
+    public ResponseEntity<University[]> getAll(){
+        return new ResponseEntity<>(hipolab.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/complete")
-    public ResponseEntity<String> getAll(@RequestParam("country") List<String> countries) throws ExecutionException, InterruptedException {
+    public ResponseEntity<List<University>> getAll(@RequestParam("country") List<String> countries){
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json;charset=UTF-8");
+//        headers.set("Content-Type", "application/json;charset=UTF-8");
         return new ResponseEntity<>(hipolab.getByCountries(countries), headers, HttpStatus.OK);
     }
 
     @GetMapping("/single")
-    public ResponseEntity<String> getAllSingle(@RequestParam("country") List<String> countries){
-        StringBuilder sb = new StringBuilder();
+    public ResponseEntity<List<University>> getAllSingle(@RequestParam("country") List<String> countries){
+        List<University> res = new ArrayList<>();
         for(String country: countries){
-            if(sb.isEmpty()){
-                sb.append(hipolab.getByCountry(country));
-            }else{
-                sb.deleteCharAt(sb.length() - 1).append(", ").
-                        append(hipolab.getByCountry(country).substring(1));
-            }
+            res.addAll(Arrays.asList(hipolab.getByCountry(country)));
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json;charset=UTF-8");
-        return new ResponseEntity<>(sb.toString(), headers, HttpStatus.OK);
+//        headers.set("Content-Type", "application/json;charset=UTF-8");
+        return new ResponseEntity<>(res, headers, HttpStatus.OK);
     }
 }

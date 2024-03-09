@@ -1,12 +1,15 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.University;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -15,39 +18,39 @@ import java.util.concurrent.ExecutionException;
 public class HipoLabService {
 
     private final RestTemplate restTemplate;
+//    private final AsyncService asyncService;
+    @Value("${api.baseUrl}")
+    private String BASE_URL;
+    @Value("${api.baseUrl.country}")
+    private String PARAM_URL;
 
     @Autowired
     public HipoLabService(RestTemplate restTemplate){
         this.restTemplate = restTemplate;
+//        this.asyncService = asyncService;
     }
 
-    public ResponseEntity<String> getAll(){
-        return restTemplate.getForEntity("http://universities.hipolabs.com/search", String.class);
+    public University[] getAll(){
+        return restTemplate.getForObject(BASE_URL, University[].class);
     }
 
-    public String getByCountries(List<String> countries) throws ExecutionException, InterruptedException {
-        List<CompletableFuture<String>> tasks = new ArrayList<>();
+    public List<University> getByCountries(List<String> countries){
+        List<CompletableFuture<University[]>> tasks = new ArrayList<>();
         for(String country: countries){
-            tasks.add(getAsync(country));
+            tasks.add(CompletableFuture.supplyAsync(() -> getByCountry(country)));
+//            tasks.add(asyncService.getAsync(country, PARAM_URL, this.restTemplate));
         }
         CompletableFuture<Void> allOf = CompletableFuture.allOf(tasks.toArray(new CompletableFuture[0]));
-        allOf.get();
-        StringBuilder sb = new StringBuilder(tasks.get(0).get());
-        for(int i = 1; i < tasks.size(); i++){
-            String newAns = tasks.get(i).get();
-            sb.deleteCharAt(sb.length() - 1).append(", ").append(newAns.substring(1));
+        allOf.join();
+        List<University> res = new ArrayList<>();
+        for (CompletableFuture<University[]> task : tasks) {
+            res.addAll(Arrays.asList(task.join()));
         }
-        return sb.toString();
+        return res;
     }
 
-    @Async
-    public CompletableFuture<String> getAsync(String country){
-        String result = getByCountry(country);
-        return CompletableFuture.completedFuture(result);
-    }
-
-    public String getByCountry(String country){
-        String url = "http://universities.hipolabs.com/search?country=" + country;
-        return restTemplate.getForEntity(url, String.class).getBody();
+    public University[] getByCountry(String country){
+        String url = PARAM_URL + country;
+        return restTemplate.getForObject(url, University[].class);
     }
 }

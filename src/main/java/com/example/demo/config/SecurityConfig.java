@@ -40,11 +40,6 @@ public class SecurityConfig {
         return new UserService(this.passwordEncoder);
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        return new UserService(passwordEncoder());
-//    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
