@@ -7,20 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.concurrent.ExecutionException;
-
 @ControllerAdvice
 public class HandleAsynException {
-
-//    @ExceptionHandler(ExecutionException.class)
-//    public ResponseEntity<String> handleExecution(ExecutionException e){
-//        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//
-//    @ExceptionHandler(InterruptedException.class)
-//    public ResponseEntity<String> handleInterrupt(InterruptedException e){
-//        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleSecurity(Exception e){
@@ -34,6 +22,6 @@ public class HandleAsynException {
 
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<String> handleExpire(ExpiredJwtException e){
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

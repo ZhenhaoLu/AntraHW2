@@ -17,6 +17,5 @@ public class OtherConfig {
     @Bean
     public RestTemplate restTemplate(){
 		return new RestTemplateBuilder().build();
-//        return builder.build();
     }
 }
