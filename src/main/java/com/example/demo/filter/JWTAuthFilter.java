@@ -1,7 +1,7 @@
 package com.example.demo.filter;
 
-import com.example.demo.service.JWTService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.impl.UserService;
+import com.example.demo.service.inter.IJWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,11 +19,11 @@ import java.io.IOException;
 @Component
 public class JWTAuthFilter extends OncePerRequestFilter {
 
-    private final JWTService jwtService;
+    private final IJWTService jwtService;
     private final UserService userService;
 
     @Autowired
-    public JWTAuthFilter(JWTService jwtService, UserService userService){
+    public JWTAuthFilter(IJWTService jwtService, UserService userService){
         this.jwtService = jwtService;
         this.userService = userService;
     }

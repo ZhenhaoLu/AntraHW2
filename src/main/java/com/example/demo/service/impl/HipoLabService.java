@@ -1,6 +1,7 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.University;
+import com.example.demo.service.inter.IHipoLabService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,10 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class HipoLabService {
+public class HipoLabService implements IHipoLabService {
 
     private final RestTemplate restTemplate;
-//    private final AsyncService asyncService;
+//    private final IAsyncService asyncService;
     @Value("${api.baseUrl}")
     private String BASE_URL;
     @Value("${api.baseUrl.country}")

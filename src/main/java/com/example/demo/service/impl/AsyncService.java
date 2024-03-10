@@ -1,6 +1,7 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.University;
+import com.example.demo.service.inter.IAsyncService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -8,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class AsyncService {
+public class AsyncService implements IAsyncService {
 
     @Async
     public CompletableFuture<University[]> getAsync(String country, String paramUrl, RestTemplate restTemplate){

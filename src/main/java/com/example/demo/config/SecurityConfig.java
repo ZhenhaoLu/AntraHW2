@@ -2,7 +2,7 @@ package com.example.demo.config;
 
 
 import com.example.demo.filter.JWTAuthFilter;
-import com.example.demo.service.UserService;
+import com.example.demo.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

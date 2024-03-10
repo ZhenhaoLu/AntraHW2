@@ -1,5 +1,6 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
+import com.example.demo.service.inter.IJWTService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,7 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-public class JWTService {
+public class JWTService implements IJWTService {
     @Value("${secure.jwt.secret}")
     private String SECRETE;
 

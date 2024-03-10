@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.LogRequest;
-import com.example.demo.service.JWTService;
+import com.example.demo.service.inter.IJWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ControllerLogin {
 
-    private final JWTService jwtService;
+    private final IJWTService jwtService;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public ControllerLogin(JWTService jwtService, AuthenticationManager authenticationManager){
+    public ControllerLogin(IJWTService jwtService, AuthenticationManager authenticationManager){
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }

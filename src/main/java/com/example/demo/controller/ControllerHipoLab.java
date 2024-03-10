@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.University;
-import com.example.demo.service.HipoLabService;
+//import com.example.demo.service.impl.HipoLabService;
+import com.example.demo.service.inter.IHipoLabService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -38,10 +39,10 @@ import java.util.List;
 @RequestMapping("/universities")
 public class ControllerHipoLab {
 
-    private final HipoLabService hipolab;
+    private final IHipoLabService hipolab;
 
     @Autowired
-    public ControllerHipoLab(HipoLabService hipolab){
+    public ControllerHipoLab(IHipoLabService hipolab){
         this.hipolab = hipolab;
     }
 
