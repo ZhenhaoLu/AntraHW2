@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class HandleAsynException {
+public class HandleSecurityException {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleSecurity(Exception e){
