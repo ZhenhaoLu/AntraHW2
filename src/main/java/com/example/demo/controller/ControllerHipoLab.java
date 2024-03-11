@@ -53,9 +53,7 @@ public class ControllerHipoLab {
 
     @GetMapping("/complete")
     public ResponseEntity<List<University>> getAll(@RequestParam("country") List<String> countries){
-        HttpHeaders headers = new HttpHeaders();
-//        headers.set("Content-Type", "application/json;charset=UTF-8");
-        return new ResponseEntity<>(hipolab.getByCountries(countries), headers, HttpStatus.OK);
+        return new ResponseEntity<>(hipolab.getByCountries(countries), HttpStatus.OK);
     }
 
     @GetMapping("/single")
@@ -64,8 +62,6 @@ public class ControllerHipoLab {
         for(String country: countries){
             res.addAll(Arrays.asList(hipolab.getByCountry(country)));
         }
-        HttpHeaders headers = new HttpHeaders();
-//        headers.set("Content-Type", "application/json;charset=UTF-8");
-        return new ResponseEntity<>(res, headers, HttpStatus.OK);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }
